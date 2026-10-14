@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Add Channel tab to res.partner form -->
+    <record id="view_partner_form_inherit_channel" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.channel</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Channel" name="channel_page">
+                    <field name="channel_ids">
+                        <tree editable="bottom">
+                            <field name="channel_type"/>
+                            <field name="identifier"/>
+                            <field name="is_primary" widget="boolean_toggle"/>
+                            <field name="active" widget="boolean_toggle"/>
+                            <field name="external_id" optional="show"/>
+                            <field name="created_at" optional="hide"/>
+                        </tree>
+                        <form>
+                            <sheet>
+                                <group>
+                                    <group>
+                                        <field name="channel_type"/>
+                                        <field name="identifier"/>
+                                        <field name="partner_id"/>
+                                    </group>
+                                    <group>
+                                        <field name="is_primary"/>
+                                        <field name="active"/>
+                                        <field name="external_id"/>
+                                        <field name="created_at"/>
+                                    </group>
+                                </group>
+                            </sheet>
+                        </form>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Tree and Search for res.partner.channel -->
+    <record id="view_partner_channel_tree" model="ir.ui.view">
+        <field name="name">res.partner.channel.tree</field>
+        <field name="model">res.partner.channel</field>
+        <field name="arch" type="xml">
+            <tree string="Partner Channels" editable="bottom">
+                <field name="partner_id"/>
+                <field name="channel_type"/>
+                <field name="identifier"/>
+                <field name="is_primary" widget="boolean_toggle"/>
+                <field name="active" widget="boolean_toggle"/>
+                <field name="external_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_partner_channel_tree" model="ir.actions.act_window">
+        <field name="name">Partner Channels</field>
+        <field name="res_model">res.partner.channel</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_partner_channel_root"
+              name="Channels"
+              parent="contacts.menu_contacts"
+              action="action_partner_channel_tree"
+              sequence="20"/>
+</odoo>
